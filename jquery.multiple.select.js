@@ -360,6 +360,7 @@
 
         updateOptGroupSelect: function () {
             var $items = this.$selectItems.filter(':visible');
+            if ($items.length == 0) $items = this.$selectItems;
             $.each(this.$selectGroups, function (i, val) {
                 var group = $(val).parent().attr('data-group'),
                     $children = $items.filter('[data-group="' + group + '"]');
@@ -409,13 +410,14 @@
 
         setSelects: function (values) {
             var that = this;
-            this.$selectItems.prop('checked', false);
+            that.$selectItems.prop('checked', false);
             $.each(values, function (i, value) {
                 that.$selectItems.filter('[value="' + value + '"]').prop('checked', true);
             });
-            this.$selectAll.prop('checked', this.$selectItems.length ===
-                this.$selectItems.filter(':checked').length);
-            this.update();
+            that.$selectAll.prop('checked', this.$selectItems.length ===
+                that.$selectItems.filter(':checked').length);
+            that.update();
+            that.updateOptGroupSelect();
         },
 
         enable: function () {
